@@ -13,94 +13,12 @@ import java.util.stream.Stream;
 public class PracticeStreamApi {
 
     public static class StreamIntermediateOperationsExample {
+        static LoggerConfig logger = LoggerConfig.getLoggerInstance();
         public static void main(String[] args) {
-            // List of lists of names
-            List<List<String>> listOfLists = Arrays.asList(
-                    Arrays.asList("Reflection", "Collection", "Stream"),
-                    Arrays.asList("Structure", "State", "Flow"),
-                    Arrays.asList("Sorting", "Mapping", "Reduction", "Stream")
-            );
 
-            // Create a set to hold intermediate results
-            Set<String> intermediateResults = new HashSet<>();
-
-            // Stream pipeline demonstrating various intermediate operations
-            List<String> result = listOfLists.stream()
-                    .flatMap(List::stream)
-                    .filter(s -> s.startsWith("S"))
-                    .map(String::toUpperCase)
-                    .distinct()
-                    .sorted()
-                    .peek(s -> intermediateResults.add(s))
-                    .collect(Collectors.toList());
-
-            // Print the intermediate results
-            System.out.println("Intermediate Results:");
-            intermediateResults.forEach(System.out::println);
-
-            // Print the final result
-            System.out.println("Final Result:");
-            result.forEach(System.out::println);
-
-            List<String> strList = Arrays.asList("name","Mohini", "mohini", "mhoini", "pradeep");
-            List<String> strDistict = strList.stream().distinct().toList();
-            System.out.println("Distinct array elements:" + strDistict);
         }
     }
 
-
-    public class StreamTerminalOperationsExample {
-        public static void main(String[] args) {
-            // Sample data
-            List<String> names = Arrays.asList(
-                    "Reflection", "Collection", "Stream",
-                    "Structure", "Sorting", "State"
-            );
-
-            // forEach: Print each name
-            System.out.println("forEach:");
-            names.stream().forEach(System.out::println);
-
-            // collect: Collect names starting with 'S' into a list
-            List<String> sNames = names.stream()
-                    .filter(name -> name.startsWith("S"))
-                    .collect(Collectors.toList());
-            System.out.println("\ncollect (names starting with 'S'):");
-            sNames.forEach(System.out::println);
-
-            // reduce: Concatenate all names into a single string
-            String concatenatedNames = names.stream().reduce(
-                    "",
-                    (partialString, element) -> partialString + " " + element
-            );
-            System.out.println("\nreduce (concatenated names):");
-            System.out.println(concatenatedNames.trim());
-
-            // count: Count the number of names
-            long count = names.stream().count();
-            System.out.println("\ncount:");
-            System.out.println(count);
-
-            // findFirst: Find the first name
-            Optional<String> firstName = names.stream().findFirst();
-            System.out.println("\nfindFirst:");
-            firstName.ifPresent(System.out::println);
-
-            // allMatch: Check if all names start with 'S'
-            boolean allStartWithS = names.stream().allMatch(
-                    name -> name.startsWith("S")
-            );
-            System.out.println("\nallMatch (all start with 'S'):");
-            System.out.println(allStartWithS);
-
-            // anyMatch: Check if any name starts with 'S'
-            boolean anyStartWithS = names.stream().anyMatch(
-                    name -> name.startsWith("S")
-            );
-            System.out.println("\nanyMatch (any start with 'S'):");
-            System.out.println(anyStartWithS);
-        }
-    }
     static LoggerConfig logger = LoggerConfig.getLoggerInstance();
     public static void basicStreamApi(){
         List<Integer> list = Arrays.asList(1,2,3,4,5,6,7);
@@ -113,7 +31,6 @@ public class PracticeStreamApi {
         // sort a list
 
         List<Integer> sortNum = Arrays.asList(1,4,5,9,3,6);
-
         sortNum.stream().sorted(Comparator.reverseOrder()).toList().forEach(System.out::println);
 
         // count string with specific prefix
@@ -190,8 +107,86 @@ public class PracticeStreamApi {
 
         System.out.println(result);
 
+        // Sample data
+        List<String> names = Arrays.asList(
+                "Reflection", "Collection", "Stream",
+                "Structure", "Sorting", "State"
+        );
 
+        // forEach: Print each name
+        System.out.println("forEach:");
+        names.stream().forEach(System.out::println);
 
+        // collect: Collect names starting with 'S' into a list
+        List<String> sNames = names.stream()
+                .filter(name -> name.startsWith("S"))
+                .collect(Collectors.toList());
+        System.out.println("\ncollect (names starting with 'S'):");
+        sNames.forEach(System.out::println);
+
+        // reduce: Concatenate all names into a single string
+        String concatenatedNames = names.stream().reduce(
+                "",
+                (partialString, element) -> partialString + " " + element
+        );
+        System.out.println("\nreduce (concatenated names):");
+        System.out.println(concatenatedNames.trim());
+
+        // count: Count the number of names
+        long count3 = names.stream().count();
+        System.out.println("\ncount:");
+        System.out.println(count3);
+
+        // findFirst: Find the first name
+        Optional<String> firstName = names.stream().findFirst();
+        System.out.println("\nfindFirst:");
+        firstName.ifPresent(System.out::println);
+
+        // allMatch: Check if all names start with 'S'
+        boolean allStartWithS = names.stream().allMatch(
+                name -> name.startsWith("S")
+        );
+        System.out.println("\nallMatch (all start with 'S'):");
+        System.out.println(allStartWithS);
+
+        // anyMatch: Check if any name starts with 'S'
+        boolean anyStartWithS = names.stream().anyMatch(
+                name -> name.startsWith("S")
+        );
+        System.out.println("\nanyMatch (any start with 'S'):");
+        System.out.println(anyStartWithS);
+
+        // List of lists of names
+        List<List<String>> listOfLists = Arrays.asList(
+                Arrays.asList("Reflection", "Collection", "Stream"),
+                Arrays.asList("Structure", "State", "Flow"),
+                Arrays.asList("Sorting", "Mapping", "Reduction", "Stream")
+        );
+
+        // Create a set to hold intermediate results
+        Set<String> intermediateResults = new HashSet<>();
+
+        // Stream pipeline demonstrating various intermediate operations
+        List<String> result2 = listOfLists.stream()
+                .flatMap(List::stream)
+                .filter(s -> s.startsWith("S"))
+                .map(String::toUpperCase)
+                .distinct()
+                .sorted()
+                .peek(intermediateResults::add)
+                .toList();
+
+        // Print the intermediate results
+        System.out.println("Intermediate Results:");
+        intermediateResults.forEach(System.out::println);
+
+        // Print the final result
+        System.out.println("Final Result:");
+        result2.forEach(System.out::println);
+
+        List<String> strList = Arrays.asList("name","Mohini", "mohini", "mhoini", "pradeep");
+        List<String> strDistict = strList.stream().distinct().toList();
+        System.out.println("Distinct array elements:" + strDistict);
     }
 
     static int countFinPlatForm(double[] arrival, double[] departure){
@@ -348,27 +343,6 @@ public class PracticeStreamApi {
         List<Double> top3 = employeeList.stream().map(employee -> employee.salary)
                 .sorted(Comparator.reverseOrder()).limit(3).toList();
         System.out.println("Top 3 highest Salary: " + top3);
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public static void main(String[] args)  {
-
 
     }
 }
