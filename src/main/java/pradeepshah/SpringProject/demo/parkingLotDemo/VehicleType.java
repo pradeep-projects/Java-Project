@@ -1,4 +1,4 @@
-package pradeepshah.SpringProject.demo.parkingLot;
+package pradeepshah.SpringProject.demo.parkingLotDemo;
 
 public enum VehicleType {
     TWOWHEELER,
